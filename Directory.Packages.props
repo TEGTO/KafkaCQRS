@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="MassTransit" Version="8.4.0" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+    <PackageVersion Include="Streamiz.Kafka.Net" Version="1.7.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.5.0.109200" />
+    <PackageVersion Include="AutoMapper" Version="13.0.1" />
+    <PackageVersion Include="Confluent.Kafka" Version="2.5.0" />
+    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
+  </ItemGroup>
+</Project>

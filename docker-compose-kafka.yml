@@ -1,0 +1,45 @@
+version: '3.4'
+
+services:
+  controller-1:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: serverpulse-controller-1
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: "controller"
+      KAFKA_LISTENERS: "CONTROLLER://controller-1:9093"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      CLUSTER_ID: "GLZOVd8vSKuXdgAApudsAg"
+    volumes:
+        - kafka-controller-1:/var/lib/kafka/data
+    networks:
+        - backend-net
+
+  broker-1:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: serverpulse-broker-1
+    environment:
+      KAFKA_NODE_ID: 4
+      KAFKA_PROCESS_ROLES: "broker"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,OUTSIDE:PLAINTEXT"
+      KAFKA_LISTENERS: "PLAINTEXT://broker-1:9092,OUTSIDE://broker-1:29092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://broker-1:9092"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      CLUSTER_ID: "GLZOVd8vSKuXdgAApudsAg"
+      KAFKA_NUM_PARTITIONS: ${Kafka__PartitionsAmount}
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      # KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+    volumes:
+        - kafka-broker-1:/var/lib/kafka/data
+    networks:
+        - backend-net
+
+volumes:
+  kafka-controller-1:
+  kafka-broker-1:
+
+networks:
+  backend-net:

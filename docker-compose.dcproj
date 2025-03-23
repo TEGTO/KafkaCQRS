@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <DockerComposeProjectName>kafka-cqrs</DockerComposeProjectName>
+    <DockerPublishLocally>False</DockerPublishLocally>
+    <ProjectGuid>e94276b0-9d03-4922-8e5b-1901f73440f9</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AdditionalComposeFilePaths>docker-compose-kafka.yml;docker-compose-kafka.dev.yml;</AdditionalComposeFilePaths>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include=".env" />
+    <None Include="docker-compose-kafka.yml" />
+    <None Include="docker-compose-kafka.dev.yml">
+      <DependentUpon>docker-compose-kafka.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose.yml" />
+    <None Include=".dockerignore" />
+  </ItemGroup>
+</Project>

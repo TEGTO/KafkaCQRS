@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  orderreadapi:
+    container_name: kafka-sqrs-readapi
+    image: ${DOCKER_REGISTRY-}orderreadapi
+    build:
+      context: .
+      dockerfile: OrderReadApi/Dockerfile
+    ports: 
+      - 7150:8080
+    networks:
+      - backend-net
+
+  orderwriteapi:
+    container_name: kafka-sqrs-writeapi
+    image: ${DOCKER_REGISTRY-}orderwriteapi
+    build:
+      context: .
+      dockerfile: OrderWriteApi/Dockerfile
+    ports: 
+      - 7151:8080
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
