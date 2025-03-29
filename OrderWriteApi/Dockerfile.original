@@ -12,7 +12,6 @@ WORKDIR /src
 COPY ["Directory.Packages.props", "."]
 COPY ["Directory.Build.props", "."]
 COPY ["OrderWriteApi/OrderWriteApi.csproj", "OrderWriteApi/"]
-COPY ["OrderApi.Core/OrderApi.Core.csproj", "OrderApi.Core/"]
 RUN dotnet restore "./OrderWriteApi/OrderWriteApi.csproj"
 COPY . .
 WORKDIR "/src/OrderWriteApi"

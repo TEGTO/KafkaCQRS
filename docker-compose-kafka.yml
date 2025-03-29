@@ -1,44 +1,38 @@
 version: '3.4'
 
 services:
-  controller-1:
-    image: confluentinc/cp-kafka:7.5.0
-    container_name: serverpulse-controller-1
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: kafka-sqrs-zookeeper
     environment:
-      KAFKA_NODE_ID: 1
-      KAFKA_PROCESS_ROLES: "controller"
-      KAFKA_LISTENERS: "CONTROLLER://controller-1:9093"
-      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093"
-      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
-      CLUSTER_ID: "GLZOVd8vSKuXdgAApudsAg"
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
     volumes:
-        - kafka-controller-1:/var/lib/kafka/data
+      - zookeeper-data:/var/lib/zookeeper/data
     networks:
-        - backend-net
+      - backend-net
 
   broker-1:
     image: confluentinc/cp-kafka:7.5.0
-    container_name: serverpulse-broker-1
+    container_name: kafka-sqrs-broker-1
     environment:
-      KAFKA_NODE_ID: 4
-      KAFKA_PROCESS_ROLES: "broker"
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,OUTSIDE:PLAINTEXT"
-      KAFKA_LISTENERS: "PLAINTEXT://broker-1:9092,OUTSIDE://broker-1:29092"
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://broker-1:9092"
-      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093"
-      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
-      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
-      CLUSTER_ID: "GLZOVd8vSKuXdgAApudsAg"
-      KAFKA_NUM_PARTITIONS: ${Kafka__PartitionsAmount}
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://broker-1:9092,OUTSIDE://broker-1:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker-1:9092,OUTSIDE://localhost:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_NUM_PARTITIONS: 3
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      # KAFKA_DEFAULT_REPLICATION_FACTOR: 3
     volumes:
-        - kafka-broker-1:/var/lib/kafka/data
+      - kafka-broker-1:/var/lib/kafka/data
+    depends_on:
+      - zookeeper
     networks:
-        - backend-net
+      - backend-net
 
 volumes:
-  kafka-controller-1:
+  zookeeper-data:
   kafka-broker-1:
 
 networks:

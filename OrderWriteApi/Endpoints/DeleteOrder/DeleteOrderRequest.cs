@@ -1,7 +1,10 @@
-﻿namespace OrderWriteApi.Endpoints.DeleteOrder
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace OrderWriteApi.Endpoints.DeleteOrder
 {
     public class DeleteOrderRequest
     {
-        public Guid Id { get; set; }
+        [FromRoute]
+        public required Guid Id { get; set; }
     }
 }

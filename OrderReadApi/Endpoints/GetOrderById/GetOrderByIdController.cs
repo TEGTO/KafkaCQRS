@@ -19,7 +19,7 @@ namespace OrderReadApi.Endpoints.GetOrderById
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<GetOrderByIdResponse>> GetOrderByIdAsync(GetOrderByIdRequest request, CancellationToken cancellationToken)
         {
             var result = await client.GetResponse<Order>(new GetOrderByIdQuery(request), cancellationToken);

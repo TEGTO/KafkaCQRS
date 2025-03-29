@@ -15,7 +15,7 @@ namespace OrderWriteApi.Endpoints.DeleteOrder
             this.publishEndpoint = publishEndpoint;
         }
 
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteAsync(DeleteOrderRequest request, CancellationToken cancellationToken)
         {
             await publishEndpoint.Publish(new DeleteOrderCommand(request), cancellationToken);

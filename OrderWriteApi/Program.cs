@@ -1,9 +1,12 @@
+using Confluent.Kafka;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MassTransit;
+using OrderApi.Common;
 using OrderWriteApi;
 using OrderWriteApi.Commands.CreateOrder;
 using OrderWriteApi.Commands.UpdateOrder;
+using OrderWriteApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,23 @@ builder.Services.AddMassTransit(c =>
 
 builder.Services.AddHealthChecks();
 
+#region [Kafka]
+
+var producerConfig = new ProducerConfig
+{
+    BootstrapServers = builder.Configuration[ConfigurationKeys.KafkaBootstrapServers],
+    Acks = Acks.All,
+    AllowAutoCreateTopics = true
+};
+
+builder.Services.AddSingleton(producerConfig);
+builder.Services.AddSingleton<IKafkaProducerFactory, KafkaProducerFactory>();
+builder.Services.AddSingleton<IProducer, KafkaProducer>();
+
+builder.Services.AddScoped<IKafkaConsumer, KafkaConsumer>();
+
+#endregion
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -52,4 +72,4 @@ app.MapControllers();
 
 app.MapHealthChecks("/health");
 
-app.Run();
+await app.RunAsync();

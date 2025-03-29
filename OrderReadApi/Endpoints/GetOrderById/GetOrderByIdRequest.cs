@@ -1,7 +1,10 @@
-﻿namespace OrderReadApi.Endpoints.GetOrderById
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace OrderReadApi.Endpoints.GetOrderById
 {
     public class GetOrderByIdRequest
     {
-        public Guid Id { get; set; }
+        [FromRoute]
+        public required Guid Id { get; set; }
     }
 }

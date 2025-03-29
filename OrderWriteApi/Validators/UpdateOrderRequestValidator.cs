@@ -11,13 +11,13 @@ namespace OrderWriteApi.Validators
                 .NotEmpty();
 
             RuleFor(x => x.ProductId)
-                .NotEmpty();
+                .NotEmpty().When(x => x.ProductId != null);
 
             RuleFor(x => x.CustomerId)
-                .NotEmpty();
+                .NotEmpty().When(x => x.CustomerId != null);
 
             RuleFor(x => x.Quantity)
-                .GreaterThan(0);
+                .GreaterThan(0).When(x => x.Quantity != null);
         }
     }
 }

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>852f30d5-b35a-475d-be7e-62eda2bb9056</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OrderApi.Common\OrderApi.Common.csproj" />
     <ProjectReference Include="..\OrderApi.Core\OrderApi.Core.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,12 @@
-﻿namespace OrderReadApi.Endpoints.GetOrders
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace OrderReadApi.Endpoints.GetOrders
 {
     public class GetOrdersRequest
     {
-        public int Page { get; set; }
-        public int PageSize { get; set; }
+        [FromQuery]
+        public required int Page { get; set; }
+        [FromQuery]
+        public required int PageSize { get; set; }
     }
 }

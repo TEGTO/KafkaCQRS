@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OrderApi.Common\OrderApi.Common.csproj" />
     <ProjectReference Include="..\OrderApi.Core\OrderApi.Core.csproj" />
   </ItemGroup>
 

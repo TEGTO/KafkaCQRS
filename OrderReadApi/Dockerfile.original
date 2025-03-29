@@ -11,18 +11,17 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Directory.Packages.props", "."]
 COPY ["Directory.Build.props", "."]
-COPY ["OrderWriteApi/OrderWriteApi.csproj", "OrderWriteApi/"]
-COPY ["OrderApi.Core/OrderApi.Core.csproj", "OrderApi.Core/"]
-RUN dotnet restore "./OrderWriteApi/OrderWriteApi.csproj"
+COPY ["OrderReadApi/OrderReadApi.csproj", "OrderReadApi/"]
+RUN dotnet restore "./OrderReadApi/OrderReadApi.csproj"
 COPY . .
-WORKDIR "/src/OrderWriteApi"
-RUN dotnet build "./OrderWriteApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/OrderReadApi"
+RUN dotnet build "./OrderReadApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./OrderWriteApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./OrderReadApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "OrderWriteApi.dll"]
+ENTRYPOINT ["dotnet", "OrderReadApi.dll"]

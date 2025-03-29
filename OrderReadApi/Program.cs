@@ -1,6 +1,7 @@
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using MassTransit;
+using OrderApi.Common;
 using OrderReadApi;
 using OrderReadApi.Commands.GetOrderById;
 using OrderReadApi.Commands.GetOrders;
@@ -36,6 +37,12 @@ builder.Services.AddMassTransit(c =>
 
 builder.Services.AddHealthChecks();
 
+#region [Kafka]
+
+builder.Services.AddScoped<IKafkaConsumer, KafkaConsumer>();
+
+#endregion
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -52,4 +59,4 @@ app.MapControllers();
 
 app.MapHealthChecks("/health");
 
-app.Run();
+await app.RunAsync();

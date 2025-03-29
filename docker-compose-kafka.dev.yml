@@ -5,12 +5,10 @@ services:
     ports:
       - 9092:9092
       - 29092:29092
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://broker-1:9092,OUTSIDE://localhost:29092"
 
   kafdrop:
     image: obsidiandynamics/kafdrop:latest
-    container_name: serverpulse-kafdrop
+    container_name: kafka-sqrs-kafdrop
     ports:
       - "9000:9000"
     environment:

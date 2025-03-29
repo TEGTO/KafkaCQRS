@@ -1,10 +1,13 @@
-﻿namespace OrderWriteApi.Endpoints.UpdateOrder
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace OrderWriteApi.Endpoints.UpdateOrder
 {
     public class UpdateOrderRequest
     {
-        public Guid Id { get; set; }
-        public Guid ProductId { get; set; }
-        public Guid CustomerId { get; set; }
-        public int Quantity { get; set; }
+        [FromRoute]
+        public required Guid Id { get; set; }
+        public Guid? ProductId { get; set; }
+        public Guid? CustomerId { get; set; }
+        public int? Quantity { get; set; }
     }
 }
